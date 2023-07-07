@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-pnpm run test:integration:all
-STAGE=pro pnpm run deploy:all
+STAGE=test pnpm run test:integration:all
+STAGE=prod pnpm run deploy:prod:all
 

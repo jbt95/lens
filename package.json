@@ -10,11 +10,12 @@
 		"lint:all": "turbo run lint --output-logs=new-only" ,
 		"format:all": "turbo run format --output-logs=new-only" ,
 		"test:integration:all": "turbo run test:integration --output-logs=new-only",
-		"deploy:all": "turbo run deploy --output-logs=new-only"
+		"deploy:prod:all": "turbo run deploy:prod --output-logs=new-only",
+		"deploy:test:all": "turbo run deploy:test --output-logs=new-only"
 	},
 	"keywords": [],
 	"author": "",
-	"license": "ISC",
+	"license": "UNLICENSED",
 	"devDependencies": {
 		"esbuild": "^0.18.11",
 		"husky": "^8.0.3",

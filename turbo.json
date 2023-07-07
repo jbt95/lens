@@ -7,18 +7,12 @@
 			"dependsOn": [
 				"test:unit",
 				"^deploy:prod"
-			],
-			"env": [
-				"STAGE=prod"
 			]
 		},
 		"deploy:test": {
 			"dependsOn": [
 				"test:unit",
 				"^deploy:test"
-			],
-			"env": [
-				"STAGE=test"
 			]
 		},
 		"lint": {

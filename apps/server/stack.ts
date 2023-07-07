@@ -16,7 +16,9 @@ import {
 import * as logs from 'aws-cdk-lib/aws-logs';
 import * as z from 'zod';
 
-const STAGE = z.string().default('test').parse(process.env.STAGE);
+console.log(process.env);
+
+const STAGE = z.string().parse(process.env.STAGE);
 
 class Stack extends cdk.Stack {
 	public static readonly appName = `lens-${STAGE}`;
