@@ -1,0 +1,11 @@
+{
+	"name": "@lens/eslint-config",
+	"version": "0.0.0",
+	"private": true,
+	"peerDependencies": {
+		"@typescript-eslint/eslint-plugin": "*",
+		"@typescript-eslint/parser": "*",
+		"eslint": "*",
+		"eslint-config-prettier": "^8.5.0"
+	}
+}

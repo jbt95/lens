@@ -1,0 +1,14 @@
+build
+node_modules
+.env
+**/.DS_Store
+
+# Webstorm IDE config
+.idea
+.vscode
+
+# Generated code
+/apps/**/build
+/apps/**/dist
+tsconfig.tsbuildinfo
+cdk.out

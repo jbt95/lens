@@ -1,0 +1,7 @@
+{
+	"extends": "@lens/ts-config/tsconfig.json",
+	"compilerOptions": {
+		"outDir": "dist"
+	},
+	"include": ["./**/*.ts"]
+}

@@ -1,0 +1,21 @@
+{
+	"name": "lens",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"postinstall": "husky install",
+		"type:check:all": "nx run-many --target=type:check",
+		"test:unit:all": "nx run-many --target=test:unit",
+		"lint:all": "nx run-many --target=lint",
+		"format:all": "nx run-many --target=format",
+		"test:integration:all": "nx run-many --target=integration"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"husky": "^8.0.3",
+		"nx": "^16.5.0"
+	}
+}
