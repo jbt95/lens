@@ -16,8 +16,6 @@ import {
 import * as logs from 'aws-cdk-lib/aws-logs';
 import * as z from 'zod';
 
-console.log(process.env);
-
 const STAGE = z.string().parse(process.env.STAGE);
 
 class Stack extends cdk.Stack {
