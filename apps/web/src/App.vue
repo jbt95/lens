@@ -97,7 +97,7 @@ const focalLength = computed(() => {
 
 <template>
   <div class="absolute top-36 h-screen w-full flex flex-col items-center gap-2">
-    <div class="flex flex-row gap-2">
+    <div class="p-4 w-full sm:w-1/2 flex flex-row gap-2">
       <Input :value="n" max="2" min="1" step=".1" @changed="(v) => (n = v)">n</Input>
       <Input :value="r1" max="100" min="1" @changed="(v) => (r1 = v)">R1</Input>
       <Input :value="r2" max="100" min="1" @changed="(v) => (r2 = v)">R2</Input>
