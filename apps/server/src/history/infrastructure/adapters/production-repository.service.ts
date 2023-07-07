@@ -2,8 +2,7 @@ import appEnv from '@/env';
 import History from '@/history/domain/entity';
 import Repository from '@/history/domain/repository.service';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
-import { injectable } from 'inversify';
-import { EMPTY, Observable, defer, expand, lastValueFrom, map, mergeMap, toArray } from 'rxjs';
+import { defer, EMPTY, expand, lastValueFrom, map, mergeMap, Observable, toArray } from 'rxjs';
 
 type ISODateString = string;
 
@@ -16,9 +15,12 @@ interface Marshalled extends DocumentClient.AttributeMap {
 	n: number;
 }
 
-@injectable()
 export default class ProductionRepository extends Repository {
 	private static readonly commonId = '_';
+
+	constructor(private documentClient: DocumentClient) {
+		super();
+	}
 
 	private static marhsall(h: History): Marshalled {
 		return {
@@ -39,10 +41,6 @@ export default class ProductionRepository extends Repository {
 			d: m.d,
 			n: m.n
 		};
-	}
-
-	constructor(private documentClient: DocumentClient) {
-		super();
 	}
 
 	public async save(history: History): Promise<void> {

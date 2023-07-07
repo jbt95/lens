@@ -1,5 +1,4 @@
 import Repository from '@/history/domain/repository.service';
-import { injectable } from 'inversify';
 
 export interface Command {
 	date: Date;
@@ -9,7 +8,6 @@ export interface Command {
 	n: number;
 }
 
-@injectable()
 export default class CreateHistoryHandler {
 	constructor(private repository: Repository) {}
 

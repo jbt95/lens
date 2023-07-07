@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import CreateHistoryHandler from '@/history/application/commands/create/handler.service';
 import InMemoryRepository from '@/history/infrastructure/adapters/in-memory-repository.service';
 import * as assert from 'node:assert/strict';

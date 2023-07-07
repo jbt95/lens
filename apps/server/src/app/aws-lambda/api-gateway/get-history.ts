@@ -1,23 +1,22 @@
-import 'reflect-metadata';
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
 import buildHandler from '../handler';
 import * as z from 'zod';
-import container from '../container';
 import handleApiError from './error-handler';
 import ProductionRepository from '@/history/infrastructure/adapters/production-repository.service';
 import History from '@/history/domain/entity';
 import { apiGateway } from '@lens/internal';
+import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 
-const bodySchema = z.object({
+const queryStringParamsSchema = z.object({
 	from: z.string().transform((s) => new Date(s)),
 	to: z.string().transform((s) => new Date(s))
 });
 
-const repository = container.get(ProductionRepository);
+const repository = new ProductionRepository(new DocumentClient());
 
 export const handler = buildHandler<APIGatewayProxyEventV2, APIGatewayProxyResultV2>(async (e) => {
-	const { from, to } = bodySchema.parse(JSON.parse(e.body!));
 	try {
+		const { from, to } = queryStringParamsSchema.parse(e.queryStringParameters);
 		return repository.getByTimeframe(from, to).then((items) => ({
 			statusCode: 200,
 			body: JSON.stringify({ items: items.map(buildResource) })

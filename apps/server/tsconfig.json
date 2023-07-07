@@ -2,9 +2,8 @@
 	"extends": "@lens/ts-config/tsconfig.json",
 	"compilerOptions": {
 		"paths": {
-			"@/*": ["*"]
-		},
-		"baseUrl": "./src"
+			"@/*": ["./src/*"]
+		}
 	},
 	"include": ["./**/*.ts"]
 }

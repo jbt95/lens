@@ -5,17 +5,20 @@
 	"main": "index.js",
 	"scripts": {
 		"postinstall": "husky install",
-		"type:check:all": "nx run-many --target=type:check",
-		"test:unit:all": "nx run-many --target=test:unit",
-		"lint:all": "nx run-many --target=lint",
-		"format:all": "nx run-many --target=format",
-		"test:integration:all": "nx run-many --target=integration"
+		"type:check:all": "turbo run type:check --output-logs=new-only" ,
+		"test:unit:all": "turbo run test:unit --output-logs=new-only" ,
+		"lint:all": "turbo run lint --output-logs=new-only" ,
+		"format:all": "turbo run format --output-logs=new-only" ,
+		"test:integration:all": "turbo run test:integration --output-logs=new-only",
+		"deploy:all": "turbo run deploy --output-logs=new-only"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
+		"esbuild": "^0.18.11",
 		"husky": "^8.0.3",
-		"nx": "^16.5.0"
+		"turbo": "^1.10.7"
 	}
+
 }

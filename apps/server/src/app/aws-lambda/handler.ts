@@ -1,4 +1,7 @@
 import { Context, Handler } from 'aws-lambda';
+import { config } from 'aws-sdk';
+
+config.logger = console;
 
 export default function buildHandler<E, O = unknown>(
 	handler: (e: E, ctx: Context) => Promise<O>

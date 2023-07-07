@@ -4,9 +4,14 @@ importers:
 
   .:
     specifiers:
+      esbuild: ^0.18.11
       husky: ^8.0.3
       nx: ^16.5.0
+      turbo: ^1.10.7
+    dependencies:
+      turbo: 1.10.7
     devDependencies:
+      esbuild: 0.18.11
       husky: 8.0.3
       nx: 16.5.0
 
@@ -28,13 +33,13 @@ importers:
       '@types/aws-lambda': ^8.10.119
       '@types/mocha': ^10.0.1
       '@types/node': ^20.1.7
+      '@types/node-fetch': ^2.6.4
       aws-cdk: 2.87.0
       aws-cdk-lib: 2.87.0
       aws-sdk: ^2.1339.0
       constructs: ^10.0.0
-      inversify: ^6.0.1
       mocha: ^10.2.0
-      reflect-metadata: ^0.1.13
+      node-fetch: ^2.0.0
       rxjs: ^7.8.1
       source-map-support: ^0.5.21
       ts-node: ^10.9.1
@@ -42,8 +47,6 @@ importers:
       typescript: ~5.1.3
       zod: ^3.21.4
     dependencies:
-      inversify: 6.0.1
-      reflect-metadata: 0.1.13
       rxjs: 7.8.1
       zod: 3.21.4
     devDependencies:
@@ -53,11 +56,13 @@ importers:
       '@types/aws-lambda': 8.10.119
       '@types/mocha': 10.0.1
       '@types/node': 20.4.0
+      '@types/node-fetch': 2.6.4
       aws-cdk: 2.87.0
       aws-cdk-lib: 2.87.0_constructs@10.2.69
       aws-sdk: 2.1412.0
       constructs: 10.2.69
       mocha: 10.2.0
+      node-fetch: 2.6.12
       source-map-support: 0.5.21
       ts-node: 10.9.1_gziturp7akyvcyww3rtj5vzity
       tsconfig-paths: 4.2.0
@@ -125,6 +130,12 @@ importers:
       vite: 4.4.1_@types+node@18.16.19
       vitest: 0.32.4_jsdom@22.1.0
       vue-tsc: 1.8.4_typescript@5.0.4
+
+  packages/eslint-config:
+    specifiers: {}
+
+  packages/ts-config:
+    specifiers: {}
 
 packages:
 
@@ -1030,6 +1041,13 @@ packages:
 
   /@types/mocha/10.0.1:
     resolution: {integrity: sha512-/fvYntiO1GeICvqbQ3doGDIP97vWmvFt83GKguJ6prmQM2iXZfFcq6YE8KteFyRtX2/h5Hf91BYvPodJKFYv5Q==}
+    dev: true
+
+  /@types/node-fetch/2.6.4:
+    resolution: {integrity: sha512-1ZX9fcN4Rvkvgv4E6PAY5WXUFWFcRWxZa3EW83UjycOB9ljJCedb2CupIP4RZMEwF/M3eTcCihbBRgwtGbg5Rg==}
+    dependencies:
+      '@types/node': 20.4.0
+      form-data: 3.0.1
     dev: true
 
   /@types/node/14.18.53:
@@ -2877,6 +2895,15 @@ packages:
       mime-types: 2.1.35
     dev: true
 
+  /form-data/3.0.1:
+    resolution: {integrity: sha512-RHkBKtLWUVwd7SqRIvCZMEvAMoGUp0XU+seQiZejj0COz3RI3hWP4sCv3gZWWLjJTd7rGwcsF5eKZGii0r/hbg==}
+    engines: {node: '>= 6'}
+    dependencies:
+      asynckit: 0.4.0
+      combined-stream: 1.0.8
+      mime-types: 2.1.35
+    dev: true
+
   /form-data/4.0.0:
     resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
     engines: {node: '>= 6'}
@@ -3289,10 +3316,6 @@ packages:
       has: 1.0.3
       side-channel: 1.0.4
     dev: true
-
-  /inversify/6.0.1:
-    resolution: {integrity: sha512-B3ex30927698TJENHR++8FfEaJGqoWOgI6ZY5Ht/nLUsFCwHn6akbwtnUAPCgUepAnTpe2qHxhDNjoKLyz6rgQ==}
-    dev: false
 
   /is-arguments/1.1.1:
     resolution: {integrity: sha512-8Q7EARjzEnKpt/PCD7e1cgUS0a6X8u5tdSiMqXhojOdoV9TsMsiO+9VLC5vAmO8N7/GmXn7yjR8qnA6bVAEzfA==}
@@ -3957,6 +3980,18 @@ packages:
     resolution: {integrity: sha512-mmcei9JghVNDYydghQmeDX8KoAm0FAiYyIcUt/N4nhyAipB17pllZQDOJD2fotxABnt4Mdz+dKTO7eftLg4d0A==}
     dev: true
 
+  /node-fetch/2.6.12:
+    resolution: {integrity: sha512-C/fGU2E8ToujUivIO0H+tpQ6HWo4eEmchoPIoXtxCrVghxdKq+QOHqEZW7tuP3KlV3bC8FRMO5nMCC7Zm1VP6g==}
+    engines: {node: 4.x || >=6.0.0}
+    peerDependencies:
+      encoding: ^0.1.0
+    peerDependenciesMeta:
+      encoding:
+        optional: true
+    dependencies:
+      whatwg-url: 5.0.0
+    dev: true
+
   /node-gyp-build/4.6.0:
     resolution: {integrity: sha512-NTZVKn9IylLwUzaKjkas1e4u2DLNcV4rdYagA4PWdPwW87Bi7z+BznyKSRwS/761tV/lzCGXplWsiaMjLqP2zQ==}
     hasBin: true
@@ -4524,10 +4559,6 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /reflect-metadata/0.1.13:
-    resolution: {integrity: sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==}
-    dev: false
-
   /regexp.prototype.flags/1.5.0:
     resolution: {integrity: sha512-0SutC3pNudRKgquxGoRGIz946MZVHqbNfPjBdxeOhBrdgDKlRoXmYLQN9xRbrR09ZXWeGAdPuif7egofn6v5LA==}
     engines: {node: '>= 0.4'}
@@ -5094,6 +5125,10 @@ packages:
       url-parse: 1.5.10
     dev: true
 
+  /tr46/0.0.3:
+    resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
+    dev: true
+
   /tr46/4.1.1:
     resolution: {integrity: sha512-2lv/66T7e5yNyhAAC4NaKe5nVavzuGJQVVtRYLyQ2OI8tsJ61PMLlelehb0wi2Hx6+hT/OJUWZcw8MjlSRnxvw==}
     engines: {node: '>=14'}
@@ -5167,6 +5202,67 @@ packages:
     dependencies:
       safe-buffer: 5.2.1
     dev: true
+
+  /turbo-darwin-64/1.10.7:
+    resolution: {integrity: sha512-N2MNuhwrl6g7vGuz4y3fFG2aR1oCs0UZ5HKl8KSTn/VC2y2YIuLGedQ3OVbo0TfEvygAlF3QGAAKKtOCmGPNKA==}
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /turbo-darwin-arm64/1.10.7:
+    resolution: {integrity: sha512-WbJkvjU+6qkngp7K4EsswOriO3xrNQag7YEGRtfLoDdMTk4O4QTeU6sfg2dKfDsBpTidTvEDwgIYJhYVGzrz9Q==}
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /turbo-linux-64/1.10.7:
+    resolution: {integrity: sha512-x1CF2CDP1pDz/J8/B2T0hnmmOQI2+y11JGIzNP0KtwxDM7rmeg3DDTtDM/9PwGqfPotN9iVGgMiMvBuMFbsLhg==}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /turbo-linux-arm64/1.10.7:
+    resolution: {integrity: sha512-JtnBmaBSYbs7peJPkXzXxsRGSGBmBEIb6/kC8RRmyvPAMyqF8wIex0pttsI+9plghREiGPtRWv/lfQEPRlXnNQ==}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /turbo-windows-64/1.10.7:
+    resolution: {integrity: sha512-7A/4CByoHdolWS8dg3DPm99owfu1aY/W0V0+KxFd0o2JQMTQtoBgIMSvZesXaWM57z3OLsietFivDLQPuzE75w==}
+    cpu: [x64]
+    os: [win32]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /turbo-windows-arm64/1.10.7:
+    resolution: {integrity: sha512-D36K/3b6+hqm9IBAymnuVgyePktwQ+F0lSXr2B9JfAdFPBktSqGmp50JNC7pahxhnuCLj0Vdpe9RqfnJw5zATA==}
+    cpu: [arm64]
+    os: [win32]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /turbo/1.10.7:
+    resolution: {integrity: sha512-xm0MPM28TWx1e6TNC3wokfE5eaDqlfi0G24kmeHupDUZt5Wd0OzHFENEHMPqEaNKJ0I+AMObL6nbSZonZBV2HA==}
+    hasBin: true
+    requiresBuild: true
+    optionalDependencies:
+      turbo-darwin-64: 1.10.7
+      turbo-darwin-arm64: 1.10.7
+      turbo-linux-64: 1.10.7
+      turbo-linux-arm64: 1.10.7
+      turbo-windows-64: 1.10.7
+      turbo-windows-arm64: 1.10.7
+    dev: false
 
   /tweetnacl/0.14.5:
     resolution: {integrity: sha512-KXXFFdAbFXY4geFIwoyNK+f5Z1b7swfXABfL7HXCmoIWMKU3dmS26672A4EeQtDzLKy7SXmfBu51JolvEKwtGA==}
@@ -5539,6 +5635,10 @@ packages:
       - debug
     dev: true
 
+  /webidl-conversions/3.0.1:
+    resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
+    dev: true
+
   /webidl-conversions/7.0.0:
     resolution: {integrity: sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==}
     engines: {node: '>=12'}
@@ -5562,6 +5662,13 @@ packages:
     dependencies:
       tr46: 4.1.1
       webidl-conversions: 7.0.0
+    dev: true
+
+  /whatwg-url/5.0.0:
+    resolution: {integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==}
+    dependencies:
+      tr46: 0.0.3
+      webidl-conversions: 3.0.1
     dev: true
 
   /which-boxed-primitive/1.0.2:
