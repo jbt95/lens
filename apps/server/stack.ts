@@ -1,25 +1,19 @@
 /* eslint-disable quotes */
 import * as cdk from 'aws-cdk-lib';
-import { RemovalPolicy } from 'aws-cdk-lib';
+import {RemovalPolicy} from 'aws-cdk-lib';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as lambda from 'aws-cdk-lib/aws-lambda-nodejs';
-import { Runtime } from 'aws-cdk-lib/aws-lambda';
-import { Construct } from 'constructs';
+import {Runtime} from 'aws-cdk-lib/aws-lambda';
+import {Construct} from 'constructs';
 import * as path from 'path';
-import {
-	IResource,
-	LambdaIntegration,
-	MockIntegration,
-	PassthroughBehavior,
-	RestApi
-} from 'aws-cdk-lib/aws-apigateway';
+import {Cors, LambdaIntegration, RestApi} from 'aws-cdk-lib/aws-apigateway';
 import * as logs from 'aws-cdk-lib/aws-logs';
 import * as z from 'zod';
 
 const STAGE = z.string().parse(process.env.STAGE);
 
 class Stack extends cdk.Stack {
-	public static readonly appName = `lens-${STAGE}`;
+	public static readonly appName = `lens`;
 
 	constructor(scope: Construct, id: string, props?: cdk.StackProps) {
 		super(scope, id, props);
@@ -63,12 +57,26 @@ class Stack extends cdk.Stack {
 		table.grantWriteData(postHistoryEndpointLambda);
 		table.grantReadData(getHistoryEndpointLambda);
 
-		const api = new RestApi(this, 'hitoryApi', { restApiName: 'History API' });
+		const api = new RestApi(this, 'hitoryApi', {
+			restApiName: 'History API',
+			defaultCorsPreflightOptions: {
+				allowOrigins: Cors.ALL_ORIGINS,
+				allowMethods: Cors.ALL_METHODS,
+				allowHeaders: Cors.DEFAULT_HEADERS,
+				allowCredentials: true,
+				statusCode: 200,
+				exposeHeaders: [
+					'Access-Control-Allow-Origin',
+					'Access-Control-Allow-Headers',
+					'Access-Control-Allow-Methods',
+					'Access-Control-Allow-Credentials'
+				]
+			}
+		});
 
 		const items = api.root.addResource('history');
 		items.addMethod('POST', new LambdaIntegration(postHistoryEndpointLambda));
 		items.addMethod('GET', new LambdaIntegration(getHistoryEndpointLambda));
-		this.addCorsOptions(items);
 
 		this.exportValue(api.restApiId, {
 			name: `HttpApiId-${STAGE}`
@@ -78,45 +86,8 @@ class Stack extends cdk.Stack {
 	private static buildResourcePrefix(v: string): string {
 		return `${Stack.appName}-${STAGE}-${v}`;
 	}
-
-	private addCorsOptions(apiResource: IResource) {
-		apiResource.addMethod(
-			'OPTIONS',
-			new MockIntegration({
-				integrationResponses: [
-					{
-						statusCode: '200',
-						responseParameters: {
-							'method.response.header.Access-Control-Allow-Headers':
-								"'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
-							'method.response.header.Access-Control-Allow-Origin': "'*'",
-							'method.response.header.Access-Control-Allow-Credentials': "'false'",
-							'method.response.header.Access-Control-Allow-Methods': "'OPTIONS,GET,PUT,POST,DELETE'"
-						}
-					}
-				],
-				passthroughBehavior: PassthroughBehavior.NEVER,
-				requestTemplates: {
-					'application/json': '{"statusCode": 200}'
-				}
-			}),
-			{
-				methodResponses: [
-					{
-						statusCode: '200',
-						responseParameters: {
-							'method.response.header.Access-Control-Allow-Headers': true,
-							'method.response.header.Access-Control-Allow-Methods': true,
-							'method.response.header.Access-Control-Allow-Credentials': true,
-							'method.response.header.Access-Control-Allow-Origin': true
-						}
-					}
-				]
-			}
-		);
-	}
 }
 
 const app = new cdk.App();
-new Stack(app, Stack.appName, {});
+new Stack(app, `${Stack.appName}-${STAGE}`, {});
 app.synth();

@@ -19,7 +19,10 @@ export const handler = buildHandler<APIGatewayProxyEventV2, APIGatewayProxyResul
 		const { from, to } = queryStringParamsSchema.parse(e.queryStringParameters);
 		return repository.getByTimeframe(from, to).then((items) => ({
 			statusCode: 200,
-			body: JSON.stringify({ items: items.map(buildResource) })
+			body: JSON.stringify({ items: items.map(buildResource) }),
+			headers: {
+				'Access-Control-Allow-Origin': '*'
+			}
 		}));
 	} catch (err) {
 		return handleApiError(err);

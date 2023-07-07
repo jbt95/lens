@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import Lens from '@/components/Lens.vue'
 import Input from '@/components/Input.vue'
-import { computed, reactive, watch } from 'vue'
+import { computed, onBeforeMount, reactive, ref, watch } from 'vue'
 import { apiGateway } from '@lens/internal'
 
 const PRECISION = 100
@@ -38,22 +38,42 @@ const focalLength = computed(() => {
   return Number.isNaN(value) ? 0 : value
 })
 
-const history = Array.from({ length: 10 }).map(
-  (_, i): apiGateway.history.Resource => ({
-    date: new Date().toISOString(),
-    r2: Math.random() * i,
-    r1: Math.random() * i,
-    d: Math.random() * i,
-    n: Math.random() * i
-  })
-)
+const history = ref<apiGateway.history.Resource[]>([])
 
 watch(
   state,
   debounceAsync(async () => {
-    console.log(state)
+    fetch(`${import.meta.env.VITE_API_URL}/history`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        date: new Date().toISOString(),
+        r1: state.r1,
+        r2: state.r2,
+        d: state.d,
+        n: state.n
+      })
+    })
   })
 )
+
+onBeforeMount(async () => {
+  history.value = await fetch(
+    `${import.meta.env.VITE_API_URL}/history?from=${new Date(
+      0
+    ).toISOString()}&to=${new Date().toISOString()}`,
+    {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  )
+    .then((res) => res.json() as Promise<{ items: apiGateway.history.Resource[] }>)
+    .then((res) => res.items)
+})
 </script>
 
 <template>
@@ -68,9 +88,13 @@ watch(
     <span class="text-xs text-black font-mono">f: {{ focalLength }}</span>
     <hr class="border-solid border-gray-300 w-1/2" />
     <div class="flex flex-col gap-2 pt-10">
-      <p v-for="h in history" v-bind:key="h.date" class="text-xs font-mono">
-        {{ h.date }}
-      </p>
+      <div v-for="h in history" v-bind:key="h.date" class="text-xs font-mono">
+        <p>{{ h.date }}</p>
+        <p>{{ h.r1 }}</p>
+        <p>{{ h.r2 }}</p>
+        <p>{{ h.d }}</p>
+        <p>{{ h.n }}</p>
+      </div>
     </div>
   </div>
 </template>

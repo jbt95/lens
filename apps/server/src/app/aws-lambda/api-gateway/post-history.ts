@@ -21,9 +21,13 @@ const createHistoryHandler = new CreateHistoryHandler(
 export const handler = buildHandler<APIGatewayProxyEventV2, APIGatewayProxyResultV2>(async (e) => {
 	try {
 		const body = bodySchema.parse(JSON.parse(e.body!));
-		return createHistoryHandler
-			.execute(body)
-			.then(() => ({ statusCode: 200, body: JSON.stringify({ success: true }) }));
+		return createHistoryHandler.execute(body).then(() => ({
+			statusCode: 200,
+			body: JSON.stringify({ success: true }),
+			headers: {
+				'Access-Control-Allow-Origin': '*'
+			}
+		}));
 	} catch (err) {
 		return handleApiError(err);
 	}
