@@ -10,5 +10,5 @@ export default async function getApiUrl(): Promise<string> {
 		.promise()
 		.then((res) => res.Stacks?.at(0));
 
-	return stack!.Outputs!.find((o) => o.OutputKey === 'ExportHttpApiId')!.OutputValue!;
+	return stack!.Outputs!.find((o) => o.OutputKey === 'ExportHttpApiIdtest')!.OutputValue!;
 }

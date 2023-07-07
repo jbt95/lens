@@ -3,10 +3,22 @@
   "pipeline": {
     "type:check": {},
 		"format": {},
-		"deploy": {
+		"deploy:prod": {
 			"dependsOn": [
 				"test:unit",
-				"^deploy"
+				"^deploy:prod"
+			],
+			"env": [
+				"STAGE=prod"
+			]
+		},
+		"deploy:test": {
+			"dependsOn": [
+				"test:unit",
+				"^deploy:test"
+			],
+			"env": [
+				"STAGE=test"
 			]
 		},
 		"lint": {
@@ -18,12 +30,8 @@
 		"test:unit": {},
 		"test:integration": {
 			"dependsOn": [
-				"deploy",
+				"deploy:test",
 				"^test:integration"
-			],
-			"env": [
-				"NODE_ENV=test",
-				"STAGE=test"
 			]
 		}
   }

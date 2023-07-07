@@ -71,7 +71,7 @@ class Stack extends cdk.Stack {
 		this.addCorsOptions(items);
 
 		this.exportValue(api.restApiId, {
-			name: 'HttpApiId'
+			name: `HttpApiId-${STAGE}`
 		});
 	}
 

@@ -3,12 +3,13 @@
 	"version": "0.0.0",
 	"scripts": {
 		"build": "tsc",
-		"deploy": "cdk bootstrap && cdk deploy",
 		"type:check": "tsc --noEmit",
 		"test:unit": "mocha --require ts-node/register --require source-map-support/register --require tsconfig-paths/register --recursive --spec './src/__tests__/unit/**/*.test.ts'",
 		"test:integration": "mocha --require ts-node/register --require source-map-support/register --require tsconfig-paths/register --recursive --spec './src/__tests__/integration/**/*.test.ts'",
 		"format": "prettier --write \"src/**/*.ts\"",
-		"lint": "eslint . --ext .ts --fix"
+		"lint": "eslint . --ext .ts --fix",
+		"deploy:test": "STAG=test cdk bootstrap && cdk deploy",
+		"deploy:prod": "STAG=prod cdk bootstrap && cdk deploy"
 	},
 	"devDependencies": {
 		"@lens/eslint-config": "workspace:^0.0.0",
