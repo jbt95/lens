@@ -1,16 +1,25 @@
 /* eslint-disable quotes */
 import * as cdk from 'aws-cdk-lib';
-import {RemovalPolicy} from 'aws-cdk-lib';
+import { RemovalPolicy } from 'aws-cdk-lib';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as lambda from 'aws-cdk-lib/aws-lambda-nodejs';
-import {Runtime} from 'aws-cdk-lib/aws-lambda';
-import {Construct} from 'constructs';
+import { Runtime } from 'aws-cdk-lib/aws-lambda';
+import { Construct } from 'constructs';
 import * as path from 'path';
-import {IResource, LambdaIntegration, MockIntegration, PassthroughBehavior, RestApi} from 'aws-cdk-lib/aws-apigateway';
+import {
+	IResource,
+	LambdaIntegration,
+	MockIntegration,
+	PassthroughBehavior,
+	RestApi
+} from 'aws-cdk-lib/aws-apigateway';
 import * as logs from 'aws-cdk-lib/aws-logs';
+import * as z from 'zod';
+
+const STAGE = z.string().default('test').parse(process.env.STAGE);
 
 class Stack extends cdk.Stack {
-	public static readonly appName = 'lens';
+	public static readonly appName = `lens-${STAGE}`;
 
 	constructor(scope: Construct, id: string, props?: cdk.StackProps) {
 		super(scope, id, props);
@@ -67,7 +76,7 @@ class Stack extends cdk.Stack {
 	}
 
 	private static buildResourcePrefix(v: string): string {
-		return `${Stack.appName}-${v}`;
+		return `${Stack.appName}-${STAGE}-${v}`;
 	}
 
 	private addCorsOptions(apiResource: IResource) {

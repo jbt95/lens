@@ -18,7 +18,12 @@
 		"test:unit": {},
 		"test:integration": {
 			"dependsOn": [
-				"deploy"
+				"deploy",
+				"^test:integration"
+			],
+			"env": [
+				"NODE_ENV=test",
+				"STAGE=test"
 			]
 		}
   }

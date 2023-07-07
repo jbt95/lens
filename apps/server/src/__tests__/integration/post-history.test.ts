@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
 import * as assert from 'assert/strict';
 import getApiUrl from './get-api-url';
+import cleanup from './cleanup';
 
 describe('When creating a history record', function (this) {
 	this.timeout(10_0000);
@@ -13,9 +14,11 @@ describe('When creating a history record', function (this) {
 
 	let baseUrl: string;
 
-	before(async () => {
-		baseUrl = `https://${await getApiUrl()}.execute-api.eu-west-1.amazonaws.com/prod`;
-	});
+	before(
+		async () => (baseUrl = `https://${await getApiUrl()}.execute-api.eu-west-1.amazonaws.com/prod`)
+	);
+
+	after(() => cleanup());
 
 	describe('and the body is valid', () => {
 		it('should 200', async () => {
