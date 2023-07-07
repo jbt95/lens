@@ -9,6 +9,11 @@ const emit = defineEmits<{
 
 const value = ref<number>(props.value ?? 0)
 
+watch(
+  () => props.value,
+  (v) => (value.value = v ?? 0)
+)
+
 watch(value, (v) => emit('changed', v))
 </script>
 
