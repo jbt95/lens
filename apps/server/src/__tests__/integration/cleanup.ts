@@ -1,7 +1,7 @@
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import { EMPTY, bufferCount, defer, expand, lastValueFrom, mergeMap } from 'rxjs';
 
-const dc = new DocumentClient();
+const dc = new DocumentClient({ region: 'eu-west-1' });
 
 export default async function cleanup() {
 	const tableName = 'lens-test';
