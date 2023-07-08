@@ -24,9 +24,9 @@ const nBatches = computed(() => Math.ceil(props.data.length / BATCH_SIZE))
       <thead class="text-xs text-gray-700 uppercase bg-gray-200">
         <tr>
           <th class="px-6 py-3" scope="col">Date</th>
+          <th class="px-6 py-3" scope="col">n</th>
           <th class="px-6 py-3" scope="col">R1</th>
           <th class="px-6 py-3" scope="col">R2</th>
-          <th class="px-6 py-3" scope="col">n</th>
           <th class="px-6 py-3" scope="col">d</th>
         </tr>
       </thead>
@@ -42,9 +42,9 @@ const nBatches = computed(() => Math.ceil(props.data.length / BATCH_SIZE))
               Replay
             </button>
           </th>
+          <td class="px-6 py-4">{{ r.n }}</td>
           <td class="px-6 py-4">{{ r.r1 }}</td>
           <td class="px-6 py-4">{{ r.r2 }}</td>
-          <td class="px-6 py-4">{{ r.n }}</td>
           <td class="px-6 py-4">{{ r.d }}</td>
         </tr>
       </tbody>
