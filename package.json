@@ -8,7 +8,7 @@
 		"type:check:all": "turbo run type:check --output-logs=new-only" ,
 		"test:unit:all": "turbo run test:unit --output-logs=new-only" ,
 		"lint:all": "turbo run lint --output-logs=new-only" ,
-		"format:all": "turbo run format --output-logs=new-only" ,
+		"format:all": "turbo run format --output-logs=new-only --force" ,
 		"test:integration:all": "turbo run test:integration --output-logs=new-only",
 		"deploy:prod:all": "turbo run deploy:prod --output-logs=new-only",
 		"deploy:test:all": "turbo run deploy:test --output-logs=new-only"

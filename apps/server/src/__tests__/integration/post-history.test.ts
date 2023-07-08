@@ -1,7 +1,7 @@
-import fetch from 'node-fetch';
 import * as assert from 'assert/strict';
-import getApiUrl from './get-api-url';
+import fetch from 'node-fetch';
 import cleanup from './cleanup';
+import getApiUrl from './get-api-url';
 
 describe('When creating a history record', function (this) {
 	this.timeout(10_0000);
