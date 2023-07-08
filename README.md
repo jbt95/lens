@@ -17,17 +17,24 @@ This project is a monorepo composed of two `apps`:
 - `packages/ts-config`: Contains the typescript configuration
 
 # Usage
-### Deploying the server
+### Deploying the api
 To deploy de server run `pnpm deploy:prod:all` with this environment variables:
-- `AWS_ACCESS_KEY_ID=<your_key>`
-- `AWS_SECRET_ACCESS_KEY=<your_secret_key>`
-- `AWS_ACCOUNT_ID=<your_account_id>`
-- `AWS_REGION=eu-west-1`
+- `AWS_PROFILE=<your_profile>`: The aws profile to use defined in `~/.aws/credentials`. This is **optional**, if you don't provide it, the **default profile** will be used ([more info](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)).
+  
+	```
+	# ~/.aws/credentials file example
+	
+	[default]
+	aws_access_key_id = <your_access_key_id>
+	aws_secret_access_key = <your_secret_access_key>
+	aws_account_id = <your_account_id>
+	region = eu-west-1
+	```
 - `STAGE=prod`
 
 For example:
 ``` 
- AWS_ACCESS_KEY_ID=<your_key> AWS_SECRET_ACCESS_KEY=<your_secret_key> AWS_ACCOUNT_ID=<your_account_id> STAGE=prod AWS_REGION=eu-west-1 pnpm deploy:prod:all
+ AWS_PROFILE=<your_profile> STAGE=prod pnpm deploy:prod:all
 ```
 
 After the deploy is completed you should grab the api url either from your aws console or from the output of the deploy command.
