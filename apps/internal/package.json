@@ -14,7 +14,7 @@
 	},
 	"scripts": {
 		"type:check": "tsc --noEmit",
-		"build": "tsc --build --clean",
+		"build": "tsc",
 		"lint": "eslint . --ext .ts --fix"
 	},
 	"keywords": [],
