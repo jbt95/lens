@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { formatDate } from '@/utils'
 import { apiGateway } from '@lens/internal'
 import { computed, ref } from 'vue'
 
@@ -6,21 +7,14 @@ const BATCH_SIZE = 10
 
 const props = defineProps<{ data: apiGateway.history.Resource[] }>()
 const emits = defineEmits<{ (e: 'replay', index: number): void }>()
+
 const batchIndex = ref<number>(0)
 
-const formatDate = (d: string) => {
-  return Intl.DateTimeFormat('en-GB', {
-    dateStyle: 'full',
-    timeStyle: 'short',
-    timeZone: 'Europe/Madrid'
-  }).format(new Date(d))
-}
-
 const onReplay = (index: number) => emits('replay', index)
+const isSelected = (index: number) => index === batchIndex.value
 
 const batch = computed(() => props.data.slice(batchIndex.value, batchIndex.value + BATCH_SIZE))
 const nBatches = computed(() => Math.ceil(props.data.length / BATCH_SIZE))
-const isSelected = (index: number) => index === batchIndex.value
 </script>
 
 <template>

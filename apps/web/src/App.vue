@@ -1,22 +1,12 @@
 <script lang="ts" setup>
-import Lens from '@/components/Lens.vue'
 import Input from '@/components/Input.vue'
-import { computed, onBeforeMount, ref, watch } from 'vue'
-import { apiGateway } from '@lens/internal'
+import Lens from '@/components/Lens.vue'
 import Table from '@/components/Table.vue'
+import { debounceAsync } from '@/utils'
+import { apiGateway } from '@lens/internal'
+import { computed, onBeforeMount, ref, watch } from 'vue'
 
 const PRECISION = 100
-
-function debounceAsync(fn: (...args: any[]) => Promise<unknown>) {
-  let timer: number | undefined
-  return async () => {
-    window.clearTimeout(timer)
-    timer = window.setTimeout(async () => {
-      timer = undefined
-      await fn()
-    }, 400)
-  }
-}
 
 const r1 = ref<number>(0)
 const r2 = ref<number>(0)

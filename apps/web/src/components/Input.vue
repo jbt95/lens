@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
+import { ref, watch, watchEffect } from 'vue'
 
 const props = defineProps<{ value?: number; step?: string; max?: string; min?: string }>()
 
@@ -9,10 +9,7 @@ const emit = defineEmits<{
 
 const value = ref<number>(props.value ?? 0)
 
-watch(
-  () => props.value,
-  (v) => (value.value = v ?? 0)
-)
+watchEffect(() => (value.value = props.value ?? 0))
 
 watch(value, (v) => emit('changed', v))
 </script>
