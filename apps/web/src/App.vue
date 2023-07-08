@@ -2,9 +2,17 @@
 import Input from '@/components/Input.vue'
 import Lens from '@/components/Lens.vue'
 import Table from '@/components/Table.vue'
-import { debounceAsync } from '@/utils'
+import { debounceAsync, jsonRequest } from '@/utils'
 import { apiGateway } from '@lens/internal'
 import { computed, onBeforeMount, ref, watch } from 'vue'
+
+type PostHistoryRequestBody = Readonly<{
+  date: string
+  r1: number
+  r2: number
+  d: number
+  n: number
+}>
 
 const PRECISION = 100
 
@@ -15,19 +23,12 @@ const n = ref<number>(1)
 const history = ref<apiGateway.history.Resource[]>([])
 
 onBeforeMount(async () => {
-  history.value = await fetch(
-    `${import.meta.env.VITE_API_URL}/history?from=${new Date(
+  history.value = await jsonRequest<never, { items: apiGateway.history.Resource[] }>({
+    url: `${import.meta.env.VITE_API_URL}/history?from=${new Date(
       0
     ).toISOString()}&to=${new Date().toISOString()}`,
-    {
-      method: 'GET',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-  )
-    .then((res) => res.json() as Promise<{ items: apiGateway.history.Resource[] }>)
+    method: 'GET'
+  })
     .then((res) => res.items)
     .then((items) => items.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()))
 })
@@ -45,17 +46,16 @@ watch(
       },
       ...history.value
     ]
-    await fetch(`${import.meta.env.VITE_API_URL}/history`, {
+    await jsonRequest<PostHistoryRequestBody>({
+      url: `${import.meta.env.VITE_API_URL}/history`,
       method: 'POST',
-      mode: 'cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+      body: {
         date: new Date().toISOString(),
         r1: r1.value,
         r2: r2.value,
         d: d.value,
         n: n.value
-      })
+      }
     })
   })
 )
