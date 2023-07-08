@@ -3,6 +3,7 @@
   "pipeline": {
     "type:check": {},
 		"format": {},
+		"build": {},
 		"deploy:prod": {
 			"dependsOn": [
 				"test:unit",

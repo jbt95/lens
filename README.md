@@ -43,11 +43,13 @@ It should look like this:
 > `https://<api_id>.execute-api.eu-west-1.amazonaws.com/prod`
 
 ### Running the web app
-To run the web app you will need to create an `.env` file in `apps/web` folder with the following content:
+Before running the web you will need to build the `internal` package. To do so, run `pnpm build:internal`.
+
+After building the package you can now run the web app, but before, you will need to create an `.env` file in `apps/web` folder with the following content:
 
 > VITE_API_URL=<api_url>
 
-`VITE_API_URL` should be the url you got from the deploy command or from the aws console.
+`VITE_API_URL` should be the api url you got from the deploy command or from the aws console.
 
 Then you can `cd apps/web` and run `pnpm run dev` to start the web app.
 
