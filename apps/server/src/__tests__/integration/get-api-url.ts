@@ -1,6 +1,6 @@
 import { CloudFormation } from 'aws-sdk';
 
-const cf = new CloudFormation();
+const cf = new CloudFormation({ region: 'eu-west-1' });
 
 export default async function getApiUrl(): Promise<string> {
 	const stack = await cf
