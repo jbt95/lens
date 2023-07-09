@@ -1,5 +1,7 @@
 # Installation
 
+> ⚠️ This project uses node v16.15.0
+
 This project uses `pnpm` as its package manager. You can install it with `npm i -g pnpm`.
 
 To install the dependencies, run
